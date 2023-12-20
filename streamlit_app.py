@@ -1,6 +1,7 @@
 import torch
 import streamlit as st
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, AutoModelForCausalLM
+from peft import AutoPeftModelForSeq2SeqLM
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, GenerationConfig
 
 @st.cache_resource
 def get_model():
@@ -8,8 +9,9 @@ def get_model():
     my_model_name = 'BhushanM25/fine-tuned-flan-t5-base-v4'
     tokenizer = AutoTokenizer.from_pretrained(original_model_name)
     
-    my_model = AutoModelForSeq2SeqLM.from_pretrained(original_model_name, torch_dtype=torch.bfloat16)
-    my_model.load_adapter(my_model_name)
+    my_model = AutoPeftModelForSeq2SeqLM.from_pretrained('BhushanM25/fine-tuned-flan-t5-base-v4',
+                                       torch_dtype=torch.bfloat16,
+                                       is_trainable=False)
     return tokenizer, my_model
 
 tokenizer, model = get_model()
@@ -23,16 +25,12 @@ Summarize the following conversation.
 Summary:
 """
 
-    inputs = tokenizer(prompt, return_tensors='pt')
-    output = tokenizer.decode(
-        model.generate(
-            inputs["input_ids"],
-            max_new_tokens=200,
-        )[0],
-        skip_special_tokens=True
-    )
-    print("Generated fine-tuned output: ", output)
-    return output
+    input_ids = tokenizer(prompt, return_tensors='pt').input_ids
+    model_outputs = model.generate(input_ids=input_ids, 
+                                   generation_config=GenerationConfig(max_new_tokens=200))
+    text_output = tokenizer.decode(model_outputs[0], skip_special_tokens=True)
+    print("Generated fine-tuned output: ", text_output)
+    return text_output
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -81,8 +79,7 @@ user_input = st.chat_input("Say something")
 
 if user_input:
     
-    current_user = st.session_state['current_user'] 
-    print("CURRENT_USER: ", current_user)
+    current_user = st.session_state['current_user']
         
     st.session_state.messages.append({"role": current_user, "content": user_input})
     # Display user message in chat message container
