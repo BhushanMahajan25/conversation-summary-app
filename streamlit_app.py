@@ -67,6 +67,36 @@ def format_messages():
 
 st.title("Conversation Summarization App")
 
+st.markdown("""
+### Functionality Overview
+
+The Chat Summarizer Web App offers a straightforward platform for simulating chat conversations and generating summaries. The following features are highlighted:
+
+#### Conversation Simulation
+
+- **Toggling Mechanism:** The app incorporates a toggling mechanism that allows a single user to simulate a conversation between two entities. This design choice simplifies the user experience for the purpose of showcasing the language model's summarization capabilities.
+
+#### Summary Generation
+
+- **Generate Summary Button:** Users can initiate the summary generation process by clicking the `Summarize` button. This action formats the simulated conversation as per the requirements of the fine-tuned language model and triggers the model to generate a concise summary.
+
+### Design Philosophy
+
+The web app prioritizes simplicity to draw attention to the core functionality—language model-based chat summarization. While the app may not implement industry best practices for a full-fledged chat application, it serves as a purposeful and illustrative tool for understanding the capabilities of the fine-tuned language model.
+
+### How to Use
+
+1. **Simulate Chat:** Type messages for each user to simulate a chat conversation. The application will toggle between the users internally.
+2. **Generate Summary:** Click the `Summarize` button to observe the language model's summarization in action.
+3. **View Summary:** The generated summary will be displayed on the screen.
+
+### Note
+
+This web app is intentionally designed for simplicity purposes, focusing on the core functionality of chat summarization using the fine-tuned language model.
+            
+""")
+
+
 # # Display chat messages from history on app rerun
 for message in st.session_state.messages:
     role = message["role"]
