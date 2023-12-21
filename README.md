@@ -82,8 +82,7 @@ Hu et al., [“LoRA: Low-Rank Adaptation of Large Language Models”](https://ar
 
 Fine-tuning only the adaptable (Feed Forward Network) FFN layer minimizes forgetting previous knowledge while allowing model customization for summarization. LoRA also lowers compute requirements compared to full fine-tuning.
 
-![LoRA](![image](https://github.com/BhushanMahajan25/conversation-summary-app/assets/29192863/5d6b80ce-0f23-485e-9fdb-f332bac44f41)
-)
+![LoRA](https://github.com/BhushanMahajan25/conversation-summary-app/assets/29192863/5d6b80ce-0f23-485e-9fdb-f332bac44f41)
 
 To learn more about "LoRA", visit here: https://huggingface.co/docs/peft/conceptual_guides/lora
 
